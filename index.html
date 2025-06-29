@@ -23,23 +23,47 @@
     <div class="flex items-center gap-4">
       <button><img src="./images/moon_icon.png" alt="" class="w-6"></button>
     <a href="#contact" class="hidden lg:flex items-center gap-3 px-10 py-2.5 border border-gray-500 rounded-full ml-4">Contact <img src="./images/arrow-icon.png" alt="" class="w-3"></a>
-    <button class="md:hidden ml-3" onclick="openMenu()">
-      <img src="./images/menu-black.png" alt="" class="w-6">
-    </button>
+    <button class="md:hidden ml-3 p-2 rounded-full hover:bg-gray-200 transition-colors duration-300" onclick="openMenu()">
+  <img src="./images/menu-black.png" alt="Open menu" class="w-6">
+</button>
+
     </div>
     <!-----Mobile Menu----->
-    <ul id="sideMenu" class="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition duration-500">
-      <div class="absolute right-6 top-6" onclick="closeMenu()">
-        <img src="./images/close-black.png" alt="" class="w-5 cursor-pointer">
-      </div> 
-      <li ><a href="#top" onclick="closeMenu()">Home</a></li>
-      <li ><a href="#about" onclick="closeMenu()">About</a></li>
-      <li ><a href="#services" onclick="closeMenu()">Services</a></li>
-      <li ><a href="#work"onclick="closeMenu()">Work</a></li>
-      <li ><a href="#contact" onclick="closeMenu()">Contact</a></li>
+    <ul id="sideMenu" class="flex md:hidden flex-col gap-6 py-24 px-8 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-gradient-to-b from-rose-100 to-rose-300 shadow-lg transition-transform duration-500 ease-in-out">
+  <div class="absolute right-6 top-6 cursor-pointer" onclick="closeMenu()">
+  <img src="./images/close-black.png" alt="Close menu" class="w-5 hover:scale-110 transition-transform duration-200">
+</div>
 
-    </ul>
+  </div> 
+  <li><a href="#top" onclick="closeMenu()" class="block py-2 px-4 rounded hover:bg-rose-200 transition-colors duration-300">Home</a></li>
+  <li><a href="#about" onclick="closeMenu()" class="block py-2 px-4 rounded hover:bg-rose-200 transition-colors duration-300">About</a></li>
+  <li><a href="#services" onclick="closeMenu()" class="block py-2 px-4 rounded hover:bg-rose-200 transition-colors duration-300">Services</a></li>
+  <li><a href="#work" onclick="closeMenu()" class="block py-2 px-4 rounded hover:bg-rose-200 transition-colors duration-300">Work</a></li>
+  <li><a href="#contact" onclick="closeMenu()" class="block py-2 px-4 rounded hover:bg-rose-200 transition-colors duration-300">Contact</a></li>
+</ul>
+
   </nav>
+
+
+  <!--- Hero Section --->
+  <div class="w-full h-screen flex flex-col items-center justify-center text-center gap-6 px-5 lg:px-8 xl:px[8%]">
+    <img src="./images/profile-img.png" alt="" class="rounded-full w-32">
+    <h3 class="flex items-center gap-2 text-xl md:text-2xl mb-3">Hi! I'm David Offei Akuffo <img src="./images/hand-icon.png" alt="" class="w-6"></h3>
+    <h1 class="text-5xl font-bold">Frontend Developer</h1>
+    <p class="max-w-2xl mx-auto">As a frontend developer, I specialize in creating visually appealing and user-friendly interfaces using the latest technologies. With a strong focus on delivering high-quality code, I collaborate with cross-functional teams to turn ideas into reality. My expertise encompasses HTML, CSS, and JavaScript, as well as popular frontend frameworks like React and Angular. I am dedicated to delivering exceptional user experiences and staying up-to-date with the ever-evolving world of frontend development.</p>
+
+    <div class="flex items-center gap-4">
+  <a href="#contact" class="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-8 py-3 rounded-full shadow-lg shadow-pink-400 hover:scale-105 transition-transform duration-300 flex items-center gap-2">
+    Contact 
+    <img src="./images/right-arrow-white.png" alt="" class="w-4">
+  </a>
+  <a href="#resume" download class="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-8 py-3 rounded-full shadow-lg shadow-pink-400 hover:scale-105 transition-transform duration-300 flex items-center gap-2">
+    Download Resume
+    <img src="./images/download-icon.png" alt="Download arrow" class="w-4">
+  </a>
+</div>
+
+  </div>
   <script src="./script.js"></script>
 </body>
 </html>
