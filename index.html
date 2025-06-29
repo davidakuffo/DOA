@@ -146,21 +146,20 @@
         <img src="./images/web-icon.png" alt="Web Design" class="w-12 mb-4">
         <h3 class="text-xl font-semibold">Web Design</h3>
         <p class="text-gray-600 text-center">Creating visually appealing and user-friendly web designs.</p>
-        <a href="" class="text-purple-500 hover:underline">Read More <img src="./images/right-arrow-dark.png" alt="" class="w-5"></a>
       </div>
       <div class="flex flex-col items-center bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-        <img src="./images/web-development.png" alt="Web Development" class="w-12 mb-4">
-        <h3 class="text-xl font-semibold">Web Development</h3>
+        <img src="./images/graphics-icon.png" alt="Web Development" class="w-12 mb-4">
+        <h3 class="text-xl font-semibold">Graphic design</h3>
         <p class="text-gray-600 text-center">Building responsive and interactive websites using modern technologies.</p>
       </div>
       <div class="flex flex-col items-center bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-        <img src="./images/ui-ux.png" alt="UI/UX Design" class="w-12 mb-4">
+        <img src="./images/ui-icon.png" alt="UI/UX Design" class="w-12 mb-4">
         <h3 class="text-xl font-semibold">UI/UX Design</h3>
         <p class="text-gray-600 text-center">Designing intuitive user interfaces and enhancing user experiences.</p>
       </div>
       <div class="flex flex-col items-center bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-        <img src="./images/seo.png" alt="SEO Optimization" class="w-12 mb-4">
-        <h3 class="text-xl font-semibold">SEO Optimization</h3>
+        <img src="./images/mobile-icon.png" alt="SEO Optimization" class="w-12 mb-4">
+        <h3 class="text-xl font-semibold">Mobile App</h3>
         <p class="text-gray-600 text-center">Optimizing websites for better search engine visibility and performance.</p>
       </div>
 
@@ -169,8 +168,89 @@
   </div>
 </div>
 
+<!----- Work Section -->
+<div id="work" class="w-full bg-gradient-to-b py-16 px-6 md:px-12 lg:px-24 scroll-mt-20">
+  <div class="max-w-3xl mx-auto text-center space-y-3 mb-16">
+    <h4 class="text-purple-500 uppercase tracking-widest font-semibold"><i class="fa-solid fa-briefcase"></i>My Work</h4>
+    <h2 class="text-4xl font-bold text-gray-800">Portfolio</h2>
+    <p class="text-lg text-center max-w-2xl mx-auto mt-5 mb-12">Welcome to my web development portfolio! Explore a collection of projects showcasing my expertise in front-end development</p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+      <img src="./images/work-3.png" alt="Project 1" class="w-full h-48 object-cover">
+      <div class="p-6">
+        <h3 class="text-xl font-semibold mb-2">E-commerce Website</h3>
+        <p class="text-gray-600 mb-4">Developed a fully responsive e-commerce platform with shopping cart and payment integration.</p>
+        <a href="#" class="text-purple-500 hover:underline font-medium">View Project</a>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+      <img src="./images/work-2.png" alt="Project 2" class="w-full h-48 object-cover">
+      <div class="p-6">
+        <h3 class="text-xl font-semibold mb-2">Portfolio Website</h3>
+        <p class="text-gray-600 mb-4">Created a personal portfolio website showcasing projects and skills with smooth animations.</p>
+        <a href="#" class="text-purple-500 hover:underline font-medium">View Project</a>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+      <img src="./images/work-1.png" alt="Project 3" class="w-full h-48 object-cover">
+      <div class="p-6">
+        <h3 class="text-xl font-semibold mb-2">Mobile App UI</h3>
+        <p class="text-gray-600 mb-4">Designed and developed a sleek mobile app UI with React Native and optimized user experience.</p>
+        <a href="#" class="text-purple-500 hover:underline font-medium">View Project</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 
+  <!-- Contact Section -->
+<div id="contact" class="w-full bg-gradient-to-b py-16 px-6 md:px-12 lg:px-24 scroll-mt-20">
+  <div class="max-w-3xl mx-auto text-center space-y-3 mb-16">
+    <h4 class="text-purple-500 uppercase tracking-widest font-semibold">Get In Touch</h4>
+    <h2 class="text-4xl font-bold text-gray-800">Contact Me</h2>
+    <p class="text-lg max-w-2xl mx-auto mt-5 mb-12">Feel free to reach out for collaborations or just a friendly hello!</p>
+  </div>
+
+  <form action="https://formspree.io/f/xeoknono" method="POST" class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
+    <div class="mb-6">
+      <label for="name" class="block mb-2 font-semibold text-gray-700">Name</label>
+      <input type="text" id="name" name="name" required class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+    </div>
+    <div class="mb-6">
+      <label for="email" class="block mb-2 font-semibold text-gray-700">Email</label>
+      <input type="email" id="email" name="_replyto" required class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+    </div>
+    <div class="mb-6">
+      <label for="message" class="block mb-2 font-semibold text-gray-700">Message</label>
+      <textarea id="message" name="message" rows="5" required class="w-full border border-gray-300 rounded px-4 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
+    </div>
+    <button type="submit" class="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-8 py-3 rounded-full shadow-lg shadow-pink-400 hover:scale-105 transition-transform duration-300 font-semibold">
+      Send Message
+    </button>
+  </form>
+</div>
+
+<!----- Footer Section -->
+<div class="w-full bg-gray-900 text-white py-8">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-6 space-y-4 md:space-y-0">
+    <div class="flex items-center space-x-3">
+      <img src="./images/logo_dark.png" alt="Logo" class="h-8">
+      <p class="text-gray-400 text-sm">© 2025 David Offei Akuffo. All Rights Reserved.</p>
+    </div>
+    <div class="flex space-x-6 text-sm">
+      <a href="#" class="text-white hover:underline">Terms of Service</a>
+      <a href="#" class="text-white hover:underline">Privacy Policy</a>
+      <a href="mailto:david@example.com" class="text-white hover:underline">Contact</a>
+      <a href="https://linkedin.com/in/davidoffei" target="_blank" rel="noopener" class="text-white hover:underline">LinkedIn</a>
+      <a href="https://github.com/davidoffei" target="_blank" rel="noopener" class="text-white hover:underline">GitHub</a>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto mt-6 px-6 text-center text-gray-500 text-xs">
+    <p>Built with ❤️ using Tailwind CSS and hosted on Netlify.</p>
+  </div>
+</div>
 
   <script src="./script.js"></script>
 </body>
