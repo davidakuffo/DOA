@@ -122,3 +122,27 @@ describe("closeMenu function", () => {
     }
   );
 });
+
+const toggleButton = document.getElementById("theme-toggle");
+const darkClass = "dark";
+
+// Initialize theme based on localStorage or system preference
+if (
+  localStorage.getItem("theme") === "dark" ||
+  (!localStorage.getItem("theme") &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches)
+) {
+  document.documentElement.classList.add(darkClass);
+}
+
+toggleButton.addEventListener("click", () => {
+  if (document.documentElement.classList.contains(darkClass)) {
+    document.documentElement.classList.remove(darkClass);
+    localStorage.setItem("theme", "light");
+    toggleButton.querySelector("img").src = "./images/moon_icon.png"; // moon icon for light mode
+  } else {
+    document.documentElement.classList.add(darkClass);
+    localStorage.setItem("theme", "dark");
+    toggleButton.querySelector("img").src = "./images/sun_icon.png"; // sun icon for dark mode
+  }
+});
