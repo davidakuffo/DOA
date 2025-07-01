@@ -69,7 +69,7 @@ function openMenu() {
 }
 
 function closeMenu() {
-  sideMenu.style.transorm = "translateX(s16rem)";
+  sideMenu.style.transform = "translateX(16rem)";
 }
 // Jest unit test for the `closeMenu` function using Table-Driven style
 describe("closeMenu function", () => {
