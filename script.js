@@ -146,3 +146,31 @@ toggleButton.addEventListener("click", () => {
     toggleButton.querySelector("img").src = "./images/sun_icon.png"; // sun icon for dark mode
   }
 });
+
+// Toggle dark mode on button click
+const themeToggleBtn = document.getElementById("theme-toggle");
+const htmlElement = document.documentElement;
+const moonIcon = "./images/moon_icon.png";
+const sunIcon = "./images/sun_icon.png";
+
+// Load saved theme from localStorage
+if (
+  localStorage.getItem("theme") === "dark" ||
+  (!("theme" in localStorage) &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches)
+) {
+  htmlElement.classList.add("dark");
+  themeToggleBtn.querySelector("img").src = sunIcon;
+}
+
+themeToggleBtn.addEventListener("click", () => {
+  if (htmlElement.classList.contains("dark")) {
+    htmlElement.classList.remove("dark");
+    themeToggleBtn.querySelector("img").src = moonIcon;
+    localStorage.setItem("theme", "light");
+  } else {
+    htmlElement.classList.add("dark");
+    themeToggleBtn.querySelector("img").src = sunIcon;
+    localStorage.setItem("theme", "dark");
+  }
+});
