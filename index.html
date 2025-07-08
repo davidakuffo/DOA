@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,12 +8,15 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <script src="./tailwind.config.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ovo&display=swap" rel="stylesheet">
 </head>
-<body class="overflow-x-hidden">
+<body class="overflow-x-hidden font-Outfit dark:bg-black">
   <div class="fixed top-0 right-0 w-11/12 -z-10 translate-y-[-80%]">
     <img src="./images/header-bg-color.png" alt="" class="w-full">
   </div>
-  <nav class="w-full fixed px-5 lg:px-8 xl:px[8%] py-4 flex items-center justify-between z-50">
+  <nav class="w-full fixed px-5 lg:px-8 xl:px[8%] py-4 flex items-center justify-between z-50 font-Ovo">
     <img src="./images/DOA..png" alt="logo" class="w-28 cursor-pointer mr-14">
     <ul class="hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 bg-white shadow-sm bg-opacity-50 " >
       <li><a href="#top">Home</a></li>
@@ -23,7 +26,7 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="flex items-center gap-4">
-      <button id="theme-toggle"><img src="./images/moon_icon.png" alt="" class="w-6 cursor-pointer"></button>
+      <button><img src="./images/moon_icon.png" alt="" class="w-6 cursor-pointer"></button>
       <a href="#contact" class="hidden lg:flex items-center gap-3 px-10 py-2.5 border border-gray-500 rounded-full ml-4">Contact <img src="./images/arrow-icon.png" alt="" class="w-3"></a>
     <button class="md:hidden ml-3 p-2 rounded-full hover:bg-gray-200 transition-colors duration-300" onclick="openMenu()">
   <img src="./images/menu-black.png" alt="Open menu" class="w-6">
@@ -31,7 +34,7 @@
 
     </div>
     <!-----Mobile Menu----->
-    <ul id="sideMenu" class="flex md:hidden flex-col gap-6 py-24 px-8 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-gradient-to-b from-rose-100 to-rose-300 shadow-lg transition-transform duration-500 ease-in-out">
+    <ul id="sideMenu" class="flex md:hidden flex-col gap-6 py-24 px-8 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-gradient-to-b from-rose-100 to-rose-300 shadow-lg transition-transform duration-500 ease-in-out font-Ovo">
   <div class="absolute right-6 top-6 cursor-pointer" onclick="closeMenu()">
   <img src="./images/close-black.png" alt="Close menu" class="w-5 hover:scale-110 transition-transform duration-200">
 </div>
@@ -103,8 +106,8 @@
       <h3 class="text-xl font-bold text-gray-800">Education</h3>
     </div>
     <div class="space-y-1 text-gray-600">
-      <p><span class="font-bold">VS Code:</span> Proficient in using VS Code as my primary code editor.</p>
-      <p><span class="font-bold">GitHub:</span> Skilled in using GitHub for version control and collaborative development.</p>
+      <p><span class="font-bold">High School:</span> Completed my High School at St. Augustines's College Cape Caost, Ghana, where I excelled in elective mathematics, elective ICT, and core mathematics.</p>
+      <p><span class="font-bold">University:</span> Currently pursuing a Bachelor of Science in information technologies at the University of Ghana, where I am focused on honing my skills and knowledge in the ever-evolving field of technology.</p>
     </div>
   </li>
   <li class="flex flex-col items-center bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
