@@ -1,11 +1,11 @@
 const sideMenu = document.getElementById("sideMenu");
 
 function openMenu() {
-  sideMenu.style.transform = "translateX(-100%)";
+  sideMenu.style.transform = "translateX(0)";
 }
 
 function closeMenu() {
-  sideMenu.style.transform = "translateX(0)";
+  sideMenu.style.transform = "translateX(100%)";
 }
 
 // Scroll reveal animation
@@ -33,7 +33,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const target = document.querySelector(this.getAttribute('href'));
     if (target) {
       target.scrollIntoView({ behavior: 'smooth' });
-      if (sideMenu && sideMenu.style.transform === "translateX(-100%)") {
+      if (sideMenu && sideMenu.style.transform === "translateX(0)") {
         closeMenu();
       }
     }
@@ -132,8 +132,8 @@ if (form) {
 // Mobile menu close on outside click
 document.addEventListener('click', (e) => {
   if (sideMenu && !sideMenu.contains(e.target) && !document.querySelector('button[onclick="openMenu()"]').contains(e.target)) {
-    if (sideMenu.style.transform === "translateX(-100%)") {
-      // Menu is open, don't close on outside clicks
+    if (sideMenu.style.transform === "translateX(0)") {
+      closeMenu();
     }
   }
 });

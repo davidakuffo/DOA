@@ -78,7 +78,65 @@
     letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s;
   }
   .nav-links a:hover { color: var(--teal); }
+  
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+  .menu-toggle span {
+    width: 24px;
+    height: 2px;
+    background: var(--ink);
+    transition: all 0.3s ease;
+    display: block;
+  }
+  
+  #sideMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--paper);
+    z-index: 400;
+    transform: translateX(0);
+    transition: transform 0.4s ease;
+    padding-top: 80px;
+    overflow-y: auto;
+    border-bottom: 1px solid var(--line);
+  }
+  
+  #sideMenu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+  }
+  
+  #sideMenu li a {
+    display: block;
+    padding: 16px 24px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: background 0.2s, color 0.2s;
+    border-bottom: 1px solid var(--line);
+  }
+  
+  #sideMenu li a:hover {
+    background: var(--teal-pale);
+    color: var(--teal);
+  }
  
+  .nav-links a:hover { color: var(--teal); }
   .hero {
     min-height: 100vh;
     display: grid; grid-template-columns: 1fr 1fr;
@@ -306,7 +364,9 @@
  
   @media (max-width: 768px) {
     nav { padding: 16px 24px; }
+    .menu-toggle { display: flex; }
     .nav-links { display: none; }
+    #sideMenu { transform: translateX(100%); }
     .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; }
     .hero-right { display: none; }
     section { padding: 72px 24px; }
@@ -332,7 +392,22 @@
     <li><a href="#certifications">Certifications</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button class="menu-toggle" onclick="openMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
+
+<div id="sideMenu">
+  <ul>
+    <li><a href="#experience" onclick="closeMenu()">Experience</a></li>
+    <li><a href="#skills" onclick="closeMenu()">Skills</a></li>
+    <li><a href="#projects" onclick="closeMenu()">Projects</a></li>
+    <li><a href="#certifications" onclick="closeMenu()">Certifications</a></li>
+    <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+  </ul>
+</div>
  
 <section class="hero" id="home">
   <div class="hero-left">
@@ -603,6 +678,26 @@
 </footer>
  
 <script>
+  const sideMenu = document.getElementById("sideMenu");
+
+  function openMenu() {
+    sideMenu.style.transform = "translateX(0)";
+  }
+
+  function closeMenu() {
+    sideMenu.style.transform = "translateX(100%)";
+  }
+
+  // Close menu on outside click
+  document.addEventListener('click', (e) => {
+    const menuBtn = document.querySelector('.menu-toggle');
+    if (sideMenu && !sideMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+      if (sideMenu.style.transform === "translateX(0)") {
+        closeMenu();
+      }
+    }
+  });
+
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
   document.addEventListener('mousemove', e => {
