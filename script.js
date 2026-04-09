@@ -1,124 +1,141 @@
-const sideMenu = document.querySelector("#sideMenu");
+const sideMenu = document.getElementById("sideMenu");
+
 function openMenu() {
-  sideMenu.style.transorm = "translateX(-16rem)";
-} // The single test code you generate for target function, Tabel-Driven style, covers more branches and considers edge cases.
-
-const { JSDOM } = require("jsdom");
-
-describe("openMenu", () => {
-  let sideMenu;
-
-  beforeEach(() => {
-    // Set up a mock DOM environment
-    const dom = new JSDOM(`<!DOCTYPE html><div id="sideMenu"></div>`);
-    global.document = dom.window.document;
-    global.window = dom.window;
-    sideMenu = document.getElementById("sideMenu");
-  });
-
-  afterEach(() => {
-    // Clean up the mock DOM environment
-    delete global.document;
-    delete global.window;
-  });
-
-  const testCases = [
-    {
-      description:
-        "should set transform to translateX(-16rem) when sideMenu exists",
-      setup: () => {
-        sideMenu.style.transform = ""; // Ensure initial state
-      },
-      expectedTransform: "translateX(-16rem)",
-    },
-    {
-      description: "should not throw an error when sideMenu is null",
-      setup: () => {
-        sideMenu = null; // Simulate sideMenu being null
-      },
-      expectedTransform: null, // No transform should be applied
-    },
-  ];
-
-  testCases.forEach(({ description, setup, expectedTransform }) => {
-    test(description, () => {
-      // Arrange
-      setup();
-
-      // Act
-      if (sideMenu) {
-        global.sideMenu = sideMenu; // Mock global variable
-        openMenu();
-      }
-
-      // Assert
-      if (sideMenu) {
-        expect(sideMenu.style.transform).toBe(expectedTransform);
-      } else {
-        expect(() => openMenu()).not.toThrow();
-      }
-    });
-  });
-});
-
-// Mock implementation of the function to be tested
-function openMenu() {
-  if (typeof sideMenu !== "undefined" && sideMenu) {
-    sideMenu.style.transform = "translateX(-16rem)";
-  }
+  sideMenu.style.transform = "translateX(-100%)";
 }
 
 function closeMenu() {
-  sideMenu.style.transform = "translateX(16rem)";
+  sideMenu.style.transform = "translateX(0)";
 }
-// Jest unit test for the `closeMenu` function using Table-Driven style
-describe("closeMenu function", () => {
-  let sideMenu;
 
-  beforeEach(() => {
-    // Mock the sideMenu object
-    sideMenu = {
-      style: {
-        transform: "",
-      },
-    };
+// Scroll reveal animation
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -100px 0px'
+};
 
-    // Mock the global sideMenu variable
-    global.sideMenu = sideMenu;
-  });
-
-  const testCases = [
-    {
-      description:
-        "should set transform to translateX(s16rem) when sideMenu exists",
-      initialTransform: "",
-      expectedTransform: "translateX(s16rem)",
-      shouldThrow: false,
-    },
-    {
-      description: "should throw an error when sideMenu is undefined",
-      initialTransform: null,
-      expectedTransform: null,
-      shouldThrow: true,
-    },
-  ];
-
-  testCases.forEach(
-    ({ description, initialTransform, expectedTransform, shouldThrow }) => {
-      test(description, () => {
-        if (initialTransform !== null) {
-          sideMenu.style.transform = initialTransform;
-        } else {
-          delete global.sideMenu; // Simulate undefined sideMenu
-        }
-
-        if (shouldThrow) {
-          expect(() => closeMenu()).toThrow();
-        } else {
-          closeMenu();
-          expect(sideMenu.style.transform).toBe(expectedTransform);
-        }
-      });
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
     }
-  );
+  });
+}, observerOptions);
+
+document.querySelectorAll('.scroll-reveal').forEach(el => {
+  observer.observe(el);
 });
+
+// Smooth scroll behavior
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+      if (sideMenu && sideMenu.style.transform === "translateX(-100%)") {
+        closeMenu();
+      }
+    }
+  });
+});
+
+// Add stagger animation to skill cards
+window.addEventListener('load', () => {
+  const cards = document.querySelectorAll('.skill-card');
+  cards.forEach((card, index) => {
+    card.style.animationDelay = `${index * 0.1}s`;
+  });
+});
+
+// Parallax effect on hero image
+window.addEventListener('scroll', () => {
+  const scrolled = window.pageYOffset;
+  const parallaxElements = document.querySelectorAll('.animate-float');
+  
+  parallaxElements.forEach((el) => {
+    if (scrolled < window.innerHeight) {
+      el.style.transform = `translateY(${scrolled * 0.5}px)`;
+    }
+  });
+});
+
+// Navbar background on scroll
+window.addEventListener('scroll', () => {
+  const navbar = document.querySelector('nav');
+  if (window.scrollY > 50) {
+    navbar.classList.add('shadow-lg');
+  } else {
+    navbar.classList.remove('shadow-lg');
+  }
+});
+
+// Add scroll animations for cards
+const revealCards = () => {
+  const cards = document.querySelectorAll('.experience-card, .project-card, .skill-card');
+  cards.forEach(card => {
+    const rect = card.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    }
+  });
+};
+
+window.addEventListener('scroll', revealCards);
+window.addEventListener('load', revealCards);
+
+// Animate counters (if you add them)
+const animateCounters = () => {
+  const counters = document.querySelectorAll('.counter');
+  counters.forEach(counter => {
+    const target = parseInt(counter.getAttribute('data-target'));
+    const increment = target / 100;
+    let current = 0;
+    
+    const updateCounter = () => {
+      current += increment;
+      if (current < target) {
+        counter.textContent = Math.ceil(current);
+        setTimeout(updateCounter, 30);
+      } else {
+        counter.textContent = target;
+      }
+    };
+    
+    updateCounter();
+  });
+};
+
+// Form validation and submission feedback
+const form = document.querySelector('form');
+if (form) {
+  form.addEventListener('submit', function(e) {
+    const inputs = this.querySelectorAll('input[required], textarea[required]');
+    let isValid = true;
+    
+    inputs.forEach(input => {
+      if (!input.value.trim()) {
+        isValid = false;
+        input.style.borderColor = '#ef4444';
+      } else {
+        input.style.borderColor = '#d1d5db';
+      }
+    });
+    
+    if (!isValid) {
+      e.preventDefault();
+    }
+  });
+}
+
+// Mobile menu close on outside click
+document.addEventListener('click', (e) => {
+  if (sideMenu && !sideMenu.contains(e.target) && !document.querySelector('button[onclick="openMenu()"]').contains(e.target)) {
+    if (sideMenu.style.transform === "translateX(-100%)") {
+      // Menu is open, don't close on outside clicks
+    }
+  }
+});
+
+console.log('Portfolio loaded successfully!');

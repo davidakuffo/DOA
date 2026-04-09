@@ -1,267 +1,608 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio - DOA</title>
-<link rel="icon" href="./images/doa.png" type="image/x-icon">
-
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<script src="./tailwind.config.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>David Offei Akuffo — Web Developer & IT Professional</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Ovo&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --paper: #f5f0e8;
+    --teal: #1a8c7a;
+    --teal-light: #23b89e;
+    --teal-pale: #d4f0eb;
+    --gold: #c9a84c;
+    --muted: #6b6557;
+    --line: rgba(13,13,13,0.12);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--teal);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s, width 0.3s, height 0.3s;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--teal);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: transform 0.18s ease-out, width 0.3s, height 0.3s;
+    opacity: 0.6;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.035;
+    pointer-events: none;
+    z-index: 1000;
+  }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    border-bottom: 1px solid transparent;
+    transition: background 0.4s, border-color 0.4s, backdrop-filter 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(245,240,232,0.88);
+    border-color: var(--line);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px;
+    letter-spacing: -0.5px; color: var(--ink); text-decoration: none;
+  }
+  .nav-logo span { color: var(--teal); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 12px;
+    letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+ 
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; padding: 120px 48px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; right: -80px; top: 50%;
+    transform: translateY(-50%);
+    width: 520px; height: 520px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,140,122,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 0.7s 0.2s forwards;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif; font-weight: 600;
+    font-size: clamp(52px, 6vw, 88px); line-height: 1.0; letter-spacing: -1px;
+    margin-bottom: 8px; opacity: 0; animation: fadeUp 0.8s 0.35s forwards;
+  }
+  .hero-name .accent { color: var(--teal); font-style: italic; }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(20px, 2.5vw, 32px);
+    font-weight: 300; color: var(--muted); margin-bottom: 32px;
+    opacity: 0; animation: fadeUp 0.8s 0.5s forwards;
+  }
+  .hero-desc {
+    font-size: 13px; line-height: 1.85; color: var(--muted); max-width: 460px;
+    margin-bottom: 48px; opacity: 0; animation: fadeUp 0.8s 0.65s forwards;
+  }
+  .hero-ctas {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px;
+    font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.05em;
+    text-decoration: none; border-radius: 2px; transition: all 0.25s;
+    cursor: pointer; border: none;
+  }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: var(--teal); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,140,122,0.3); }
+  .btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+  .btn-outline:hover { background: var(--ink); color: var(--paper); transform: translateY(-2px); }
+  .hero-right {
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; animation: fadeIn 1.2s 0.9s forwards;
+  }
+  .hero-card {
+    background: var(--ink); color: var(--paper); border-radius: 4px;
+    padding: 40px; max-width: 340px; width: 100%;
+    position: relative; overflow: hidden;
+  }
+  .hero-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--gold));
+  }
+  .hero-card-label {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--teal-light); margin-bottom: 20px;
+  }
+  .hero-card-stat {
+    display: flex; justify-content: space-between; padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .hero-card-stat:last-of-type { border-bottom: none; }
+  .stat-label { color: rgba(245,240,232,0.5); font-size: 11px; }
+  .stat-value { color: var(--paper); font-size: 12px; font-weight: 500; }
+  .stat-value.highlight { color: var(--teal-light); }
+  .available-badge {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 24px;
+    background: rgba(26,140,122,0.2); border: 1px solid rgba(26,140,122,0.4);
+    padding: 8px 16px; border-radius: 100px; font-size: 11px; color: var(--teal-light);
+  }
+  .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--teal-light); animation: pulse 1.8s infinite;
+  }
+ 
+  section { padding: 100px 48px; }
+  .section-label {
+    font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif; font-weight: 600;
+    font-size: clamp(36px, 4vw, 56px); line-height: 1.1; margin-bottom: 64px;
+  }
+  .section-title em { font-style: italic; color: var(--teal); }
+ 
+  .experience { background: var(--ink); color: var(--paper); }
+  .experience .section-label { color: var(--teal-light); }
+  .experience .section-title { color: var(--paper); }
+  .experience .section-title em { color: var(--teal-light); }
+  .exp-grid { display: grid; grid-template-columns: 280px 1fr; gap: 0; }
+  .exp-timeline { border-right: 1px solid rgba(255,255,255,0.08); padding-right: 40px; }
+  .exp-tab {
+    padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    cursor: pointer; transition: all 0.2s; position: relative;
+  }
+  .exp-tab::after {
+    content: ''; position: absolute; right: -1px; top: 0; bottom: 0; width: 2px;
+    background: var(--teal); transform: scaleY(0); transition: transform 0.2s;
+  }
+  .exp-tab.active::after { transform: scaleY(1); }
+  .exp-tab.active .tab-title { color: var(--teal-light); }
+  .tab-company {
+    font-size: 10px; color: rgba(245,240,232,0.4);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;
+  }
+  .tab-title {
+    font-family: 'Syne', sans-serif; font-weight: 600; font-size: 14px;
+    color: rgba(245,240,232,0.7); transition: color 0.2s;
+  }
+  .exp-content { padding-left: 56px; display: none; }
+  .exp-content.active { display: block; animation: fadeUp 0.4s forwards; }
+  .exp-role {
+    font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 28px;
+    color: var(--paper); margin-bottom: 4px;
+  }
+  .exp-company-full { color: var(--teal-light); font-size: 12px; margin-bottom: 8px; }
+  .exp-period { color: rgba(245,240,232,0.35); font-size: 11px; margin-bottom: 28px; letter-spacing: 0.05em; }
+  .exp-bullets { list-style: none; }
+  .exp-bullets li {
+    padding: 8px 0 8px 20px; position: relative;
+    color: rgba(245,240,232,0.7); font-size: 13px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .exp-bullets li::before {
+    content: '›'; position: absolute; left: 0;
+    color: var(--teal-light); font-size: 16px; line-height: 1.5;
+  }
+ 
+  .skills-section { background: var(--paper); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+  .skill-chip {
+    display: flex; align-items: center; gap: 10px; padding: 14px 18px;
+    border: 1px solid var(--line); border-radius: 3px; background: white;
+    font-size: 12px; transition: all 0.25s; position: relative; overflow: hidden;
+  }
+  .skill-chip::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: var(--teal); transform: scaleY(0); transition: transform 0.2s; transform-origin: bottom;
+  }
+  .skill-chip:hover { border-color: var(--teal); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.07); }
+  .skill-chip:hover::before { transform: scaleY(1); }
+  .skill-icon { font-size: 18px; }
+  .tech-stack { margin-top: 64px; }
+  .tech-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 24px; }
+  .tech-items { display: flex; flex-wrap: wrap; gap: 10px; }
+  .tech-tag {
+    padding: 6px 16px; background: var(--ink); color: var(--paper);
+    font-size: 11px; border-radius: 100px; letter-spacing: 0.05em; transition: background 0.2s;
+  }
+  .tech-tag:hover { background: var(--teal); }
+ 
+  .projects-section { background: #f0ebe0; }
+  .project-card {
+    border: 1px solid var(--line); border-radius: 4px; padding: 48px;
+    background: var(--paper); position: relative; overflow: hidden;
+    transition: all 0.3s; max-width: 720px;
+  }
+  .project-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--gold));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+  }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(0,0,0,0.1); }
+  .project-number {
+    font-family: 'Cormorant Garamond', serif; font-size: 80px; font-weight: 300;
+    color: var(--teal-pale); line-height: 1; position: absolute; right: 40px; top: 20px;
+    pointer-events: none;
+  }
+  .project-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 22px; margin-bottom: 12px; }
+  .project-desc { color: var(--muted); font-size: 13px; margin-bottom: 24px; line-height: 1.8; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .project-tag { padding: 4px 12px; border: 1px solid var(--teal); color: var(--teal); font-size: 11px; border-radius: 2px; }
+ 
+  .certs-section { background: var(--paper); }
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+  .cert-card {
+    border: 1px solid var(--line); border-radius: 3px; padding: 28px;
+    background: white; transition: all 0.25s;
+  }
+  .cert-card:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+  .cert-icon { font-size: 28px; margin-bottom: 16px; }
+  .cert-org { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; }
+  .cert-name { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 15px; line-height: 1.4; color: var(--ink); }
+ 
+  .contact-section { background: var(--ink); color: var(--paper); text-align: center; padding: 120px 48px; }
+  .contact-section .section-label { color: var(--teal-light); }
+  .contact-section .section-title { color: var(--paper); margin-bottom: 20px; }
+  .contact-section .section-title em { color: var(--teal-light); }
+  .contact-sub { color: rgba(245,240,232,0.5); margin-bottom: 56px; font-size: 14px; }
+  .contact-items { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+  .contact-item {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    text-decoration: none; color: var(--paper); transition: color 0.2s;
+  }
+  .contact-item:hover { color: var(--teal-light); }
+  .contact-item-icon { font-size: 24px; }
+  .contact-item-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,240,232,0.4); }
+  .contact-item-value { font-size: 13px; }
+ 
+  footer { background: #080808; color: rgba(245,240,232,0.25); text-align: center; padding: 24px; font-size: 11px; letter-spacing: 0.08em; }
+  footer span { color: var(--teal); }
+ 
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+ 
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+ 
+  #progress {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--gold));
+    z-index: 999; width: 0%; transition: width 0.1s;
+  }
+ 
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; }
+    .hero-right { display: none; }
+    section { padding: 72px 24px; }
+    .exp-grid { grid-template-columns: 1fr; }
+    .exp-timeline { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 0 0 24px; margin-bottom: 32px; }
+    .exp-content { padding-left: 0; }
+    .contact-items { flex-direction: column; align-items: center; gap: 28px; }
+  }
+</style>
 </head>
-<body class="overflow-x-hidden font-Outfit bg-white">
-  <div class="fixed top-0 right-0 w-11/12 -z-10 translate-y-[-80%]">
-    <img src="./images/header-bg-color.png" alt="" class="w-full">
-  </div>
-  <nav class="w-full fixed px-5 lg:px-8 xl:px[8%] py-4 flex items-center justify-between z-50 font-Ovo">
-    <img src="./images/DOA..png" alt="logo" class="w-28 cursor-pointer mr-14">
-    <ul class="hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 bg-white shadow-sm bg-opacity-50 " >
-      <li><a href="#top">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#work">Work</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="flex items-center gap-4">
-      <a href="#contact" class="hidden lg:flex items-center gap-3 px-10 py-2.5 border border-gray-500 rounded-full ml-4">Contact <img src="./images/arrow-icon.png" alt="" class="w-3"></a>
-    <button class="md:hidden ml-3 p-2 rounded-full hover:bg-gray-200 transition-colors duration-300" onclick="openMenu()">
-  <img src="./images/menu-black.png" alt="Open menu" class="w-6">
-</button>
-
-    </div>
-    <!-----Mobile Menu----->
-    <ul id="sideMenu" class="flex md:hidden flex-col gap-6 py-24 px-8 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-gradient-to-b from-rose-100 to-rose-300 shadow-lg transition-transform duration-500 ease-in-out font-Ovo">
-  <div class="absolute right-6 top-6 cursor-pointer" onclick="closeMenu()">
-  <img src="./images/close-black.png" alt="Close menu" class="w-5 hover:scale-110 transition-transform duration-200">
-</div>
-
-  </div> 
-  <li><a href="#top" onclick="closeMenu()" class="block py-2 px-4 rounded hover:bg-rose-200 transition-colors duration-300">Home</a></li>
-  <li><a href="#about" onclick="closeMenu()" class="block py-2 px-4 rounded hover:bg-rose-200 transition-colors duration-300">About</a></li>
-  <li><a href="#services" onclick="closeMenu()" class="block py-2 px-4 rounded hover:bg-rose-200 transition-colors duration-300">Services</a></li>
-  <li><a href="#work" onclick="closeMenu()" class="block py-2 px-4 rounded hover:bg-rose-200 transition-colors duration-300">Work</a></li>
-  <li><a href="#contact" onclick="closeMenu()" class="block py-2 px-4 rounded hover:bg-rose-200 transition-colors duration-300">Contact</a></li>
-</ul>
-
-  </nav>
-
-
-  <!--- Hero Section --->
-  <div class="w-full h-screen flex flex-col items-center justify-center text-center gap-6 px-5 lg:px-8 xl:px[8%]">
-    <img src="./images/IMG_4045.JPEG" alt="" class="rounded-full w-32">
-    <h3 class="flex items-center gap-2 text-xl md:text-2xl mb-3">Hi! I'm David Offei Akuffo <img src="./images/hand-icon.png" alt="" class="w-6"></h3>
-    <h1 class="text-5xl font-bold">Frontend Developer</h1>
-    <p class="max-w-2xl mx-auto">As a frontend developer, I specialize in creating visually appealing and user-friendly interfaces using the latest technologies. With a strong focus on delivering high-quality code, I collaborate with cross-functional teams to turn ideas into reality. My expertise encompasses HTML, CSS, and JavaScript, as well as popular frontend frameworks like React and Angular. I am dedicated to delivering exceptional user experiences and staying up-to-date with the ever-evolving world of frontend development.</p>
-
-    <div class="flex items-center gap-4">
-  <a href="#contact" class="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-8 py-3 rounded-full shadow-lg shadow-pink-400 hover:scale-105 transition-transform duration-300 flex items-center gap-2">
-    Contact 
-    <img src="./images/right-arrow-white.png" alt="" class="w-4">
-  </a>
-  <a href="./assests/davidoffeiakuffo Cv.pdf" download class="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-8 py-3 rounded-full shadow-lg shadow-pink-400 hover:scale-105 transition-transform duration-300 flex items-center gap-2">
-    Download Resume
-    <img src="./images/download-icon.png" alt="Download arrow" class="w-4">
-  </a>
-</div>
-  </div>
-
-<!--- About Section --->
-<div id="about" class="w-full bg-gradient-to-b py-16 px-6 md:px-12 lg:px-24 scroll-mt-20">
-  <div class="max-w-3xl mx-auto text-center space-y-3 mb-16">
-    <h4 class="text-purple-500 uppercase tracking-widest font-semibold">Introduction</h4>
-    <h2 class="text-4xl font-bold text-gray-800">About Me</h2>
-  </div>
-
-  <div class="flex flex-col lg:flex-row items-start justify-center gap-16 max-w-7xl mx-auto">
-    <div class="lg:w-1/2 flex justify-center">
-      <img src="./images/IMG_4045.JPEG" alt="User Image" class="rounded-3xl w-full max-w-md shadow-lg object-cover">
-    </div>
-
-    <div class="lg:w-1/2 space-y-8 text-gray-700">
-      <p class="text-lg leading-relaxed">
-        I am a dedicated frontend developer with a passion for creating visually appealing and user-friendly interfaces. With a strong foundation in HTML, CSS, and JavaScript, I specialize in translating complex ideas into functional and visually engaging web experiences.
-      </p>
-
-     <ul class="flex flex-col sm:flex-row sm:flex-wrap gap-6 max-w-7xl mx-auto px-4">
-  <li class="flex flex-col items-center bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-    <div class="flex items-center gap-3">
-      <img src="./images/code-icon.png" alt="Code Icon" class="w-6">
-      <h3 class="text-xl font-bold text-gray-800">Languages</h3>
-    </div>
-    <div class="space-y-1 text-gray-600">
-      <p><span class="font-bold">HTML:</span> Proficient in creating well-structured and semantic HTML code.</p>
-      <p><span class="font-bold">CSS:</span> Skilled in designing responsive and visually appealing layouts using CSS.</p>
-      <p><span class="font-bold">JavaScript:</span> Proficient in JavaScript, including DOM manipulation, event handling, and asynchronous operations.</p>
-      <p><span class="font-bold">React:</span> Skilled in using React to build dynamic and responsive user interfaces.</p>
-      <p><span class="font-bold">Next.js:</span> Skilled in using Next.js to build dynamic and responsive user interfaces.</p>
-    </div>
-  </li>
-  <li class="flex flex-col items-center bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-    <div class="flex items-center gap-3">
-      <img src="./images/edu-icon.png" alt="Education Icon" class="w-6">
-      <h3 class="text-xl font-bold text-gray-800">Education</h3>
-    </div>
-    <div class="space-y-1 text-gray-600">
-      <p><span class="font-bold">High School:</span> Completed my High School at St. Augustines's College Cape Caost, Ghana, where I excelled in elective mathematics, elective ICT, and core mathematics.</p>
-      <p><span class="font-bold">University:</span> Currently pursuing a Bachelor of Science in information technologies at the University of Ghana, where I am focused on honing my skills and knowledge in the ever-evolving field of technology.</p>
-    </div>
-  </li>
-  <li class="flex flex-col items-center bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-    <div class="flex items-center gap-3">
-      <img src="./images/project-icon.png" alt="Projects Icon" class="w-6">
-      <h3 class="text-xl font-bold text-gray-800">Projects</h3>
-    </div>
-    <p class="text-gray-600">I have a strong attention to detail and a passion for creating clean, maintainable code. I am also experienced in working with design tools like Figma and Adobe XD to bring designs to life.</p>
-  </li>
-</ul>
-  <h4 class="text-purple-500 uppercase tracking-widest font-semibold">Tools</h4>
-  <ul class="flex items-center gap-3 sm:gap-5">
-    <li class="flex items-center  justify-center w-12 sm:w-14 aspect-square border border-gray-400 rounded-lg cursor-pointer hover:-translate-y-1 duration-500">
-      <img src="./images/vscode.png" alt="" class="w-5 sm:w-7">
-    </li>
-    <li class="flex items-center  justify-center w-12 sm:w-14 aspect-square border border-gray-400 rounded-lg cursor-pointer hover:-translate-y-1 duration-500">
-      <img src="./images/firebase.png" alt="" class="w-5 sm:w-7">
-    </li>
-    <li class="flex items-center  justify-center w-12 sm:w-14 aspect-square border border-gray-400 rounded-lg cursor-pointer hover:-translate-y-1 duration-500">
-      <img src="./images/mongodb.png" alt="" class="w-5 sm:w-7">
-    </li>
-    <li class="flex items-center  justify-center w-12 sm:w-14 aspect-square border border-gray-400 rounded-lg cursor-pointer hover:-translate-y-1 duration-500">
-      <img src="./images/figma.png" alt="" class="w-5 sm:w-7">
-    </li>
-    <li class="flex items-center  justify-center w-12 sm:w-14 aspect-square border border-gray-400 rounded-lg cursor-pointer hover:-translate-y-1 duration-500">
-      <img src="./images/git.png" alt="" class="w-5 sm:w-7">
-    </li>
+<body>
+ 
+<div id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+ 
+<nav id="nav">
+  <a href="#" class="nav-logo">D<span>.</span>Akuffo</a>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
+</nav>
+ 
+<section class="hero" id="home">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Available for opportunities · Accra, Ghana 🇬🇭</p>
+    <h1 class="hero-name">David <span class="accent">Offei</span><br>Akuffo</h1>
+    <p class="hero-title">Web Developer & IT Professional</p>
+    <p class="hero-desc">
+      Recent B.Sc. Information Technology graduate with hands-on experience building
+      responsive web applications, e-commerce platforms, and IT systems. Currently serving
+      as Operation Support Officer at Ghana Interbank Payment and Settlement System (GHIPSS).
+    </p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-primary">Get in touch ↓</a>
+      <a href="https://doa-five.vercel.app/" target="_blank" class="btn btn-outline">View Portfolio ↗</a>
     </div>
   </div>
-</div>
-
-<!----- Services -->
-<div id="services" class="w-full bg-gradient-to-b py-16 px-6 md:px-12 lg:px-24 scroll-mt-20">
-  <div class="max-w-3xl mx-auto text-center space-y-3 mb-16">
-    <h4 class="text-purple-500 uppercase tracking-widest font-semibold"><i class="fa-solid fa-briefcase"></i>What I Do</h4>
-    <h2 class="text-4xl font-bold text-gray-800">Services</h2>
-    <p class="text-lg text-center max-w-2xl mx-auto mt-5 mb-12">I am a frontend developer from Accra, Ghana with 3+ years of experience in multiple companies like Microsoft, Apple and Tesla. I am also a freelancer and have worked with multiple clients from different countries.</p>
-    <div class="grid grid-cols-4 gap-6">
-      <div class="flex flex-col items-center bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-        <img src="./images/web-icon.png" alt="Web Design" class="w-12 mb-4">
-        <h3 class="text-xl font-semibold">Web Design</h3>
-        <p class="text-gray-600 text-center">Creating visually appealing and user-friendly web designs.</p>
+  <div class="hero-right">
+    <div class="hero-card">
+      <p class="hero-card-label">// profile snapshot</p>
+      <div class="hero-card-stat">
+        <span class="stat-label">Current Role</span>
+        <span class="stat-value highlight">Ops Support Officer</span>
       </div>
-      <div class="flex flex-col items-center bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-        <img src="./images/graphics-icon.png" alt="Web Development" class="w-12 mb-4">
-        <h3 class="text-xl font-semibold">Graphic design</h3>
-        <p class="text-gray-600 text-center">Building responsive and interactive websites using modern technologies.</p>
+      <div class="hero-card-stat">
+        <span class="stat-label">Organization</span>
+        <span class="stat-value">GHIPSS</span>
       </div>
-      <div class="flex flex-col items-center bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-        <img src="./images/ui-icon.png" alt="UI/UX Design" class="w-12 mb-4">
-        <h3 class="text-xl font-semibold">UI/UX Design</h3>
-        <p class="text-gray-600 text-center">Designing intuitive user interfaces and enhancing user experiences.</p>
+      <div class="hero-card-stat">
+        <span class="stat-label">Education</span>
+        <span class="stat-value">B.Sc. IT · Univ. of Ghana</span>
       </div>
-      <div class="flex flex-col items-center bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-        <img src="./images/mobile-icon.png" alt="SEO Optimization" class="w-12 mb-4">
-        <h3 class="text-xl font-semibold">Mobile App</h3>
-        <p class="text-gray-600 text-center">Optimizing websites for better search engine visibility and performance.</p>
+      <div class="hero-card-stat">
+        <span class="stat-label">Experience</span>
+        <span class="stat-value highlight">4+ Years</span>
       </div>
-
-    </div>
-
-  </div>
-</div>
-
-<!----- Work Section -->
-<div id="work" class="w-full bg-gradient-to-b py-16 px-6 md:px-12 lg:px-24 scroll-mt-20">
-  <div class="max-w-3xl mx-auto text-center space-y-3 mb-16">
-    <h4 class="text-purple-500 uppercase tracking-widest font-semibold"><i class="fa-solid fa-briefcase"></i>My Work</h4>
-    <h2 class="text-4xl font-bold text-gray-800">Portfolio</h2>
-    <p class="text-lg text-center max-w-2xl mx-auto mt-5 mb-12">Welcome to my web development portfolio! Explore a collection of projects showcasing my expertise in front-end development</p>
-  </div>
-
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-      <img src="./images/work-3.png" alt="Project 1" class="w-full h-48 object-cover">
-      <div class="p-6">
-        <h3 class="text-xl font-semibold mb-2">E-commerce Website</h3>
-        <p class="text-gray-600 mb-4">Developed a fully responsive e-commerce platform with shopping cart and payment integration.</p>
-        <a href="#" class="text-purple-500 hover:underline font-medium">View Project</a>
+      <div class="hero-card-stat">
+        <span class="stat-label">Speciality</span>
+        <span class="stat-value">Full-Stack + IT Support</span>
       </div>
-    </div>
-    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-      <img src="./images/work-2.png" alt="Project 2" class="w-full h-48 object-cover">
-      <div class="p-6">
-        <h3 class="text-xl font-semibold mb-2">Portfolio Website</h3>
-        <p class="text-gray-600 mb-4">Created a personal portfolio website showcasing projects and skills with smooth animations.</p>
-        <a href="#" class="text-purple-500 hover:underline font-medium">View Project</a>
+      <div class="hero-card-stat">
+        <span class="stat-label">Location</span>
+        <span class="stat-value">Accra, Ghana</span>
       </div>
-    </div>
-    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-      <img src="./images/work-1.png" alt="Project 3" class="w-full h-48 object-cover">
-      <div class="p-6">
-        <h3 class="text-xl font-semibold mb-2">Mobile App UI</h3>
-        <p class="text-gray-600 mb-4">Designed and developed a sleek mobile app UI with React Native and optimized user experience.</p>
-        <a href="#" class="text-purple-500 hover:underline font-medium">View Project</a>
+      <div class="available-badge">
+        <span class="dot"></span>
+        Open to new roles
       </div>
     </div>
   </div>
-</div>
-
-
-  <!-- Contact Section -->
-<div id="contact" class="w-full bg-gradient-to-b py-16 px-6 md:px-12 lg:px-24 scroll-mt-20">
-  <div class="max-w-3xl mx-auto text-center space-y-3 mb-16">
-    <h4 class="text-purple-500 uppercase tracking-widest font-semibold">Get In Touch</h4>
-    <h2 class="text-4xl font-bold text-gray-800">Contact Me</h2>
-    <p class="text-lg max-w-2xl mx-auto mt-5 mb-12">Feel free to reach out for collaborations or just a friendly hello!</p>
+</section>
+ 
+<section class="experience" id="experience">
+  <div class="reveal">
+    <p class="section-label">// 02 — Experience</p>
+    <h2 class="section-title">Where I've <em>Worked</em></h2>
   </div>
-
-  <form action="https://formspree.io/f/xeoknono" method="POST" class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
-    <div class="mb-6">
-      <label for="name" class="block mb-2 font-semibold text-gray-700">Name</label>
-      <input type="text" id="name" name="name" required class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+  <div class="exp-grid reveal">
+    <div class="exp-timeline">
+      <div class="exp-tab active" onclick="switchExp(0)">
+        <p class="tab-company">GHIPSS</p>
+        <p class="tab-title">Operation Support Officer</p>
+      </div>
+      <div class="exp-tab" onclick="switchExp(1)">
+        <p class="tab-company">Freelance</p>
+        <p class="tab-title">Web Developer</p>
+      </div>
+      <div class="exp-tab" onclick="switchExp(2)">
+        <p class="tab-company">Self-employed</p>
+        <p class="tab-title">Web Designer</p>
+      </div>
+      <div class="exp-tab" onclick="switchExp(3)">
+        <p class="tab-company">Ghana Civil Aviation</p>
+        <p class="tab-title">IT Support</p>
+      </div>
     </div>
-    <div class="mb-6">
-      <label for="email" class="block mb-2 font-semibold text-gray-700">Email</label>
-      <input type="email" id="email" name="_replyto" required class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+    <div>
+      <div class="exp-content active" id="exp-0">
+        <p class="exp-role">Operation Support Officer</p>
+        <p class="exp-company-full">Ghana Interbank Payment And Settlement System</p>
+        <p class="exp-period">November 2025 — Present</p>
+        <ul class="exp-bullets">
+          <li>Act as liaison between customers and internal IT support and product development teams</li>
+          <li>Negotiate terms with third-party vendors for IT support and claims processing software</li>
+          <li>Coordinate operational workflows ensuring quality assurance across payment processes</li>
+          <li>Support documentation management and process improvement initiatives</li>
+        </ul>
+      </div>
+      <div class="exp-content" id="exp-1">
+        <p class="exp-role">Freelance Web Developer</p>
+        <p class="exp-company-full">Independent · Remote</p>
+        <p class="exp-period">January 2023 — Present</p>
+        <ul class="exp-bullets">
+          <li>Developed e-commerce website using React, building user interface and admin dashboard</li>
+          <li>Built responsive web applications using HTML, CSS, and JavaScript frameworks</li>
+          <li>Collaborated with designers to implement user-friendly interfaces and improve usability</li>
+          <li>Managed code repositories using Git for version control and collaborative development</li>
+          <li>Successfully launched mobile-responsive website for a high-profile client</li>
+        </ul>
+      </div>
+      <div class="exp-content" id="exp-2">
+        <p class="exp-role">Web Designer</p>
+        <p class="exp-company-full">Independent · Remote</p>
+        <p class="exp-period">January 2021 — Present</p>
+        <ul class="exp-bullets">
+          <li>Conceptualized website designs to enhance user experience and engagement</li>
+          <li>Implemented concept designs for company websites, contributing to ongoing relevance</li>
+          <li>Collaborated with creative teams to produce visually appealing websites</li>
+        </ul>
+      </div>
+      <div class="exp-content" id="exp-3">
+        <p class="exp-role">IT Support</p>
+        <p class="exp-company-full">Ghana Civil Aviation Authority</p>
+        <p class="exp-period">September 2023 — October 2023</p>
+        <ul class="exp-bullets">
+          <li>Assisted with networking tasks across the organization's IT infrastructure</li>
+          <li>Conducted troubleshooting to identify and resolve system problems efficiently</li>
+          <li>Assisted in development and implementation of new IT support processes</li>
+        </ul>
+      </div>
     </div>
-    <div class="mb-6">
-      <label for="message" class="block mb-2 font-semibold text-gray-700">Message</label>
-      <textarea id="message" name="message" rows="5" required class="w-full border border-gray-300 rounded px-4 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
+  </div>
+</section>
+ 
+<section class="skills-section" id="skills">
+  <div class="reveal">
+    <p class="section-label">// 03 — Skills</p>
+    <h2 class="section-title">What I <em>Bring</em></h2>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-chip"><span class="skill-icon">⚙️</span> Process Automation</div>
+    <div class="skill-chip"><span class="skill-icon">📊</span> Data Analysis</div>
+    <div class="skill-chip"><span class="skill-icon">🗄️</span> Database Management</div>
+    <div class="skill-chip"><span class="skill-icon">🔄</span> Workflow Optimization</div>
+    <div class="skill-chip"><span class="skill-icon">✅</span> Quality Assurance</div>
+    <div class="skill-chip"><span class="skill-icon">📝</span> Technical Documentation</div>
+    <div class="skill-chip"><span class="skill-icon">🤝</span> Project Coordination</div>
+    <div class="skill-chip"><span class="skill-icon">💬</span> Customer Support</div>
+    <div class="skill-chip"><span class="skill-icon">👥</span> Team Collaboration</div>
+    <div class="skill-chip"><span class="skill-icon">🔍</span> Process Improvement</div>
+    <div class="skill-chip"><span class="skill-icon">🔐</span> Cybersecurity Basics</div>
+    <div class="skill-chip"><span class="skill-icon">🌐</span> Networking</div>
+  </div>
+  <div class="tech-stack reveal">
+    <p class="tech-label">// Tech Stack & Tools</p>
+    <div class="tech-items">
+      <span class="tech-tag">Python</span>
+      <span class="tech-tag">JavaScript</span>
+      <span class="tech-tag">HTML / CSS</span>
+      <span class="tech-tag">SQL</span>
+      <span class="tech-tag">React.js</span>
+      <span class="tech-tag">Node.js</span>
+      <span class="tech-tag">Express.js</span>
+      <span class="tech-tag">MongoDB</span>
+      <span class="tech-tag">Bootstrap</span>
+      <span class="tech-tag">Git & GitHub</span>
+      <span class="tech-tag">VS Code</span>
+      <span class="tech-tag">PyCharm</span>
+      <span class="tech-tag">Google Colab</span>
     </div>
-    <button type="submit" class="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-8 py-3 rounded-full shadow-lg shadow-pink-400 hover:scale-105 transition-transform duration-300 font-semibold">
-      Send Message
-    </button>
-  </form>
-</div>
-
-<!----- Footer Section -->
-<div class="w-full bg-gray-900 text-white py-8">
-  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-6 space-y-4 md:space-y-0">
-    <div class="flex items-center space-x-3">
-      <img src="./images/DOA.png" alt="Logo" class="h-8">
-      <p class="text-gray-400 text-sm">© 2025 David Offei Akuffo. All Rights Reserved.</p>
+  </div>
+</section>
+ 
+<section class="projects-section" id="projects">
+  <div class="reveal">
+    <p class="section-label">// 04 — Projects</p>
+    <h2 class="section-title">What I've <em>Built</em></h2>
+  </div>
+  <div class="reveal">
+    <div class="project-card">
+      <span class="project-number">01</span>
+      <p class="project-name">Emergency Ambulance Dispatch System</p>
+      <p class="project-desc">
+        An automated dispatch system designed to minimize emergency response times.
+        Integrates real-time location data and third-party APIs to intelligently route
+        ambulances to emergencies — reducing delays and potentially saving lives.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">Node.js</span>
+        <span class="project-tag">Express.js</span>
+        <span class="project-tag">Third-party APIs</span>
+        <span class="project-tag">Real-time</span>
+      </div>
     </div>
-    <div class="flex space-x-6 text-sm">
-      <a href="#" class="text-white hover:underline">Terms of Service</a>
-      <a href="#" class="text-white hover:underline">Privacy Policy</a>
-      <a href="mailto:david.akuffo11@gmail.com" class="text-white hover:underline">Contact</a>
-      <a href="https://www.linkedin.com/in/david-akuffo-28a162288/" target="_blank" rel="noopener" class="text-white hover:underline">LinkedIn</a>
-      <a href="https://github.com/davidakuffo" target="_blank" rel="noopener" class="text-white hover:underline">GitHub</a>
-      <a href="https://twitter.com/d_offei" target="_blank" rel="noopener" class="text-white hover:underline flex items-center gap-1">
-        Twitter
+  </div>
+</section>
+ 
+<section class="certs-section" id="certifications">
+  <div class="reveal">
+    <p class="section-label">// 05 — Certifications</p>
+    <h2 class="section-title">Credentials & <em>Learning</em></h2>
+  </div>
+  <div class="certs-grid reveal">
+    <div class="cert-card">
+      <div class="cert-icon">🌐</div>
+      <p class="cert-org">Huawei</p>
+      <p class="cert-name">HCIA Datacom V1.0 Course Certificate</p>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🔒</div>
+      <p class="cert-org">Cisco</p>
+      <p class="cert-name">Introduction to Cybersecurity — Network Security & Cyber Threat Protection</p>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🛡️</div>
+      <p class="cert-org">Cisco</p>
+      <p class="cert-name">Junior Cybersecurity Analyst Career Path — Network Defense & Threat Analysis</p>
+    </div>
+  </div>
+</section>
+ 
+<section class="contact-section" id="contact">
+  <div class="reveal">
+    <p class="section-label">// 06 — Contact</p>
+    <h2 class="section-title">Let's <em>Connect</em></h2>
+    <p class="contact-sub">Open to full-time roles, freelance projects & collaborations</p>
+    <div class="contact-items">
+      <a href="tel:+233264591159" class="contact-item">
+        <span class="contact-item-icon">📞</span>
+        <span class="contact-item-label">Phone</span>
+        <span class="contact-item-value">(+233) 26 459 1159</span>
       </a>
-      <a href="https://facebook.com/yourprofile" target="_blank" rel="noopener" class="text-white hover:underline flex items-center gap-1">
-        Facebook
+      <a href="mailto:david.akuffo11@gmail.com" class="contact-item">
+        <span class="contact-item-icon">✉️</span>
+        <span class="contact-item-label">Email</span>
+        <span class="contact-item-value">david.akuffo11@gmail.com</span>
+      </a>
+      <a href="https://doa-five.vercel.app/" target="_blank" class="contact-item">
+        <span class="contact-item-icon">🌍</span>
+        <span class="contact-item-label">Portfolio</span>
+        <span class="contact-item-value">doa-five.vercel.app</span>
       </a>
     </div>
   </div>
-  <div class="max-w-7xl mx-auto mt-6 px-6 text-center text-gray-500 text-xs">
-    <p>Built with ❤️ using Tailwind CSS and hosted on vercel.</p>
-  </div>
-</div>
-
-  <script src="./script.js"></script>
+</section>
+ 
+<footer>
+  Crafted with care &nbsp;·&nbsp; <span>David Offei Akuffo</span> &nbsp;·&nbsp; Accra, Ghana 🇬🇭
+</footer>
+ 
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => {
+      ring.style.left = e.clientX + 'px';
+      ring.style.top = e.clientY + 'px';
+    }, 80);
+  });
+  document.querySelectorAll('a, button, .exp-tab, .skill-chip').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.width='18px'; cursor.style.height='18px'; ring.style.width='56px'; ring.style.height='56px'; });
+    el.addEventListener('mouseleave', () => { cursor.style.width='10px'; cursor.style.height='10px'; ring.style.width='36px'; ring.style.height='36px'; });
+  });
+ 
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    progress.style.width = pct + '%';
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+  });
+ 
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+ 
+  function switchExp(i) {
+    document.querySelectorAll('.exp-tab').forEach((t, idx) => t.classList.toggle('active', idx === i));
+    document.querySelectorAll('.exp-content').forEach((c, idx) => c.classList.toggle('active', idx === i));
+  }
+</script>
 </body>
 </html>
